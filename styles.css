@@ -1,0 +1,299 @@
+/* Brand styles extracted from device-manager-frontend */
+
+/* Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+:root {
+  /* Brand Colors */
+  --daylight: #E1FF17;
+  --shade: #101820;
+  --heat: #FF4F39;
+  --frost: #CFDBE2;
+  --indicator-blue: #0073FF;
+
+  /* Neutrals */
+  --light-gray: #1F2632;
+  --card-gray: #353B46;
+  --light-bg: #F2F1F8;
+
+  /* Semantic tokens */
+  --primary: hsl(68, 100%, 55%);
+  --primary-foreground: hsl(213, 33%, 9%);
+  --secondary: hsl(37, 22%, 63%);
+  --muted: hsl(213, 18%, 22%);
+  --muted-foreground: hsl(207, 15%, 55%);
+  --accent: hsl(7, 100%, 61%);
+  --border: hsl(213, 18%, 20%);
+  --card: hsl(213, 25%, 15%);
+  --card-foreground: hsl(207, 22%, 85%);
+  --ring: hsl(68, 100%, 55%);
+
+  /* Glass */
+  --glass-bg: hsl(213, 24%, 13%);
+  --glass-border: hsl(213, 18%, 21%);
+
+  /* Radius */
+  --radius: 1rem;
+}
+
+/* Reset & Base */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background-color: var(--shade);
+  color: var(--frost);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Layout */
+.blog-wrapper {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem 6rem;
+}
+
+/* Header / Hero */
+.blog-header {
+  margin-bottom: 3rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.blog-header .category {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--shade);
+  background: var(--daylight);
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  margin-bottom: 1.25rem;
+}
+
+.blog-header h1 {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  color: #fff;
+  margin-bottom: 1rem;
+}
+
+.blog-header .subtitle {
+  font-size: 1.15rem;
+  color: var(--muted-foreground);
+  line-height: 1.6;
+  max-width: 620px;
+}
+
+/* Meta bar */
+.blog-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  align-items: center;
+  margin-top: 1.5rem;
+  font-size: 0.85rem;
+  color: var(--muted-foreground);
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.blog-meta .author {
+  color: var(--frost);
+  font-weight: 500;
+}
+
+.blog-meta .separator {
+  color: var(--border);
+}
+
+/* Cover image */
+.blog-cover {
+  width: 100%;
+  border-radius: var(--radius);
+  margin-bottom: 3rem;
+  border: 1px solid var(--glass-border);
+}
+
+/* Article content */
+.blog-content h2 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #fff;
+  margin-top: 2.5rem;
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.02em;
+}
+
+.blog-content h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #fff;
+  margin-top: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.blog-content h4 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--frost);
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.blog-content p {
+  margin-bottom: 1.25rem;
+  color: var(--frost);
+}
+
+.blog-content a {
+  color: var(--daylight);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  transition: color 0.15s;
+}
+
+.blog-content a:hover {
+  color: #fff;
+}
+
+.blog-content strong {
+  color: #fff;
+  font-weight: 600;
+}
+
+.blog-content em {
+  font-style: italic;
+}
+
+/* Lists */
+.blog-content ul,
+.blog-content ol {
+  margin-bottom: 1.25rem;
+  padding-left: 1.5rem;
+}
+
+.blog-content li {
+  margin-bottom: 0.4rem;
+}
+
+.blog-content li::marker {
+  color: var(--daylight);
+}
+
+/* Blockquote */
+.blog-content blockquote {
+  border-left: 3px solid var(--daylight);
+  padding: 0.75rem 1.25rem;
+  margin: 1.5rem 0;
+  background: var(--glass-bg);
+  border-radius: 0 var(--radius) var(--radius) 0;
+}
+
+.blog-content blockquote p {
+  color: var(--card-foreground);
+  margin-bottom: 1rem;
+}
+
+.blog-content blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+/* Code */
+.blog-content code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.875em;
+  background: var(--light-gray);
+  padding: 0.15em 0.4em;
+  border-radius: 0.375rem;
+  color: var(--daylight);
+}
+
+.blog-content pre {
+  background: var(--light-gray);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+  padding: 1.25rem 1.5rem;
+  margin: 1.5rem 0;
+  overflow-x: auto;
+}
+
+.blog-content pre code {
+  background: none;
+  padding: 0;
+  font-size: 0.85rem;
+  line-height: 1.65;
+  color: var(--frost);
+}
+
+/* Images */
+.blog-content img {
+  max-width: 100%;
+  border-radius: var(--radius);
+  margin: 1.5rem 0;
+  border: 1px solid var(--glass-border);
+}
+
+/* Horizontal rule */
+.blog-content hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 2.5rem 0;
+}
+
+/* Tables */
+.blog-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  font-size: 0.9rem;
+}
+
+.blog-content th {
+  text-align: left;
+  font-weight: 600;
+  color: #fff;
+  padding: 0.75rem 1rem;
+  border-bottom: 2px solid var(--border);
+}
+
+.blog-content td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.blog-content tr:hover td {
+  background: var(--glass-bg);
+}
+
+/* Footer */
+.blog-footer {
+  margin-top: 4rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border);
+  font-size: 0.85rem;
+  color: var(--muted-foreground);
+  text-align: center;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .blog-wrapper {
+    padding: 2rem 1rem 4rem;
+  }
+
+  .blog-meta {
+    gap: 0.75rem;
+  }
+}

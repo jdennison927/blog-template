@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{title}}</title>
+  <meta name="description" content="{{subtitle}}">
+  <meta property="og:title" content="{{title}}">
+  <meta property="og:description" content="{{subtitle}}">
+  <meta property="og:type" content="article">
+  {{#if og_image}}<meta property="og:image" content="{{og_image}}">{{/if}}
+  <style>
+{{styles}}
+  </style>
+</head>
+<body>
+  <article class="blog-wrapper">
+    <header class="blog-header">
+      {{#if category}}<span class="category">{{category}}</span>{{/if}}
+      <h1>{{title}}</h1>
+      {{#if subtitle}}<p class="subtitle">{{subtitle}}</p>{{/if}}
+      <div class="blog-meta">
+        {{#if author}}<span class="author">{{author}}</span>{{/if}}
+        {{#if date}}<span class="separator">/</span><span>{{date}}</span>{{/if}}
+        {{#if read_time}}<span class="separator">/</span><span>{{read_time}}</span>{{/if}}
+      </div>
+    </header>
+
+    {{#if cover_image}}<img class="blog-cover" src="{{cover_image}}" alt="{{title}}">{{/if}}
+
+    <div class="blog-content">
+{{content}}
+    </div>
+
+    <footer class="blog-footer">
+      {{#if footer}}{{footer}}{{/if}}
+    </footer>
+  </article>
+</body>
+</html>

@@ -1,0 +1,14 @@
+{
+  "name": "blog-template",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Single-file blog post compiler with brand styles",
+  "scripts": {
+    "build": "node build.js",
+    "build:all": "node build.js --all"
+  },
+  "dependencies": {
+    "marked": "^15.0.0",
+    "gray-matter": "^4.0.3"
+  }
+}
