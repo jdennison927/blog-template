@@ -5,10 +5,13 @@
   "description": "Single-file blog post compiler with brand styles",
   "scripts": {
     "build": "node build.js",
-    "build:all": "node build.js --all"
+    "build:all": "node build.js --all",
+    "build:pdf": "node build.js --pdf",
+    "build:all:pdf": "node build.js --all --pdf"
   },
   "dependencies": {
+    "gray-matter": "^4.0.3",
     "marked": "^15.0.0",
-    "gray-matter": "^4.0.3"
+    "puppeteer": "^24.37.3"
   }
 }

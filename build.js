@@ -21,6 +21,34 @@ const MIME_TYPES = {
   ".avif": "image/avif",
 };
 
+// Generate a PDF from a compiled HTML file using headless Chrome
+async function generatePdf(htmlPath) {
+  const puppeteer = require("puppeteer");
+  const browser = await puppeteer.launch();
+  const page = await browser.newPage();
+
+  await page.goto(`file://${htmlPath}`, { waitUntil: "networkidle0" });
+
+  // Scale down text and add inner padding for PDF (background stays edge-to-edge)
+  await page.addStyleTag({
+    content: "html { font-size: 90%; } .blog-wrapper { padding: 1in; }",
+  });
+
+  const pdfPath = htmlPath.replace(/\.html$/, ".pdf");
+  await page.pdf({
+    path: pdfPath,
+    format: "Letter",
+    printBackground: true,
+    margin: { top: "0", right: "0", bottom: "0", left: "0" },
+  });
+
+  await browser.close();
+
+  const size = (fs.statSync(pdfPath).size / 1024).toFixed(0);
+  console.log(`  -> dist/${path.basename(pdfPath)} (${size} KB)`);
+  return pdfPath;
+}
+
 // Estimate reading time from word count
 function readingTime(text) {
   const words = text.trim().split(/\s+/).length;
@@ -132,37 +160,52 @@ function compile(inputFile) {
 }
 
 // --- CLI ---
-const args = process.argv.slice(2);
-const buildAll = args.includes("--all");
+async function main() {
+  const args = process.argv.slice(2);
+  const buildAll = args.includes("--all");
+  const buildPdf = args.includes("--pdf");
 
-// Collect target files
-let files = [];
+  // Collect target files
+  let files = [];
 
-if (buildAll) {
-  files = fs
-    .readdirSync(CONTENT_DIR)
-    .filter((f) => f.endsWith(".md"))
-    .map((f) => path.join(CONTENT_DIR, f));
-} else {
-  // Build specific files passed as args, or all if none specified
-  const targets = args.filter((a) => !a.startsWith("--"));
-  if (targets.length) {
-    files = targets.map((t) =>
-      path.isAbsolute(t) ? t : path.join(CONTENT_DIR, t)
-    );
-  } else {
+  if (buildAll) {
     files = fs
       .readdirSync(CONTENT_DIR)
       .filter((f) => f.endsWith(".md"))
       .map((f) => path.join(CONTENT_DIR, f));
+  } else {
+    const targets = args.filter((a) => !a.startsWith("--"));
+    if (targets.length) {
+      files = targets.map((t) =>
+        path.isAbsolute(t) ? t : path.join(CONTENT_DIR, t)
+      );
+    } else {
+      files = fs
+        .readdirSync(CONTENT_DIR)
+        .filter((f) => f.endsWith(".md"))
+        .map((f) => path.join(CONTENT_DIR, f));
+    }
   }
+
+  if (!files.length) {
+    console.log("No markdown files found in content/. Add a .md file to get started.");
+    process.exit(0);
+  }
+
+  console.log(`\nBuilding ${files.length} post(s)...\n`);
+  const htmlPaths = files.map(compile);
+
+  if (buildPdf) {
+    console.log("\nGenerating PDFs...\n");
+    for (const htmlPath of htmlPaths) {
+      await generatePdf(htmlPath);
+    }
+  }
+
+  console.log("\nDone.\n");
 }
 
-if (!files.length) {
-  console.log("No markdown files found in content/. Add a .md file to get started.");
-  process.exit(0);
-}
-
-console.log(`\nBuilding ${files.length} post(s)...\n`);
-files.forEach(compile);
-console.log("\nDone.\n");
+main().catch((err) => {
+  console.error(err);
+  process.exit(1);
+});

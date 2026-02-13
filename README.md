@@ -129,6 +129,17 @@ node build.js my-post.md
 
 The filename is resolved relative to `content/`. Output goes to `dist/<slug>.html`.
 
+### Generate PDF
+
+Add `--pdf` to any build command to also produce a PDF alongside the HTML:
+
+```bash
+npm run build:pdf            # all posts → HTML + PDF
+node build.js my-post.md --pdf  # single post → HTML + PDF
+```
+
+PDFs are rendered with headless Chrome via Puppeteer, so the output is high-fidelity and matches the browser exactly. Text is scaled down slightly (90%) and padded for print, with the background extending edge-to-edge.
+
 ## Customization
 
 ### Styles
