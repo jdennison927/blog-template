@@ -31,7 +31,17 @@ async function generatePdf(htmlPath) {
 
   // Scale down text and add inner padding for PDF (background stays edge-to-edge)
   await page.addStyleTag({
-    content: "html { font-size: 90%; } .blog-wrapper { padding: 1in; }",
+    content: `
+      html { font-size: 90%; }
+      .blog-wrapper {
+        padding: 0.5in 1in;
+        -webkit-box-decoration-break: clone;
+        box-decoration-break: clone;
+      }
+      h1, h2, h3, h4, h5, h6 { break-inside: avoid; break-after: avoid; }
+      blockquote, img { break-inside: avoid; }
+      tr { break-inside: avoid; }
+    `,
   });
 
   const pdfPath = htmlPath.replace(/\.html$/, ".pdf");
